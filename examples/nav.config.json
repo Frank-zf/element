@@ -38,8 +38,17 @@
       ]
     },
     {
-      "name": "组件",
+      "name": "常用组件",
       "groups": [
+        {
+          "groupName": "ickey",
+          "list": [
+            {
+              "path": "/form-table",
+              "title": "表单Form+Table"
+            }
+          ]
+        },
         {
           "groupName": "Basic",
           "list": [
