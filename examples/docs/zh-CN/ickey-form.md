@@ -346,7 +346,7 @@ export default {
 
 :::demo ickey-table
 ```html
-<el-row>
+<el-row style="margin-bottom:20px">
   <el-button>默认按钮</el-button>
   <el-button type="primary">主要按钮</el-button>
   <el-button type="success">成功按钮</el-button>
@@ -354,7 +354,6 @@ export default {
   <el-button type="warning">警告按钮</el-button>
   <el-button type="danger">危险按钮</el-button>
 </el-row>
-<vxe-button type="submit" @click="insertEvent">新增</vxe-button>
   <vxe-table
     ref="xTable1"
     border
@@ -405,19 +404,10 @@ export default {
     <vxe-column
       title="操作"
       width="100"
-      show-overflow
     >
-      <template #default="{ row }">
-        <vxe-button
-          type="text"
-          icon="fa fa-edit"
-          @click="editEvent(row)"
-        />
-        <vxe-button
-          type="text"
-          icon="fa fa-trash-o"
-        />
-      </template>
+	<el-button type="text">查看</el-button>
+	<el-button type="text">编辑</el-button>
+	<el-button type="text">删除</el-button>
     </vxe-column>
   </vxe-table>
   <vxe-modal
