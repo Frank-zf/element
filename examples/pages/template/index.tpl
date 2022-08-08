@@ -65,7 +65,7 @@
   }
   .cards {
     margin: 0 auto 110px;
-    width: 1140px;
+    width: 1400px;
 
     .container {
       padding: 0;
@@ -151,7 +151,7 @@
       box-shadow: 0 6px 18px 0 rgba(232,237,250,0.50);
     }
   }
-  @media (max-width: 1140px) {
+  @media (max-width: 1400px) {
     .cards {
       width: 100%;
       .container {

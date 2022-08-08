@@ -17,7 +17,7 @@
     }
 
     .page-component__nav {
-      width: 240px;
+      width: 220px;
       position: fixed;
       top: 0;
       bottom: 0;
@@ -39,14 +39,14 @@
       padding-top: 50px;
       padding-bottom: 50px;
       padding-right: 0;
-
+      padding-left: 15px;
       & > ul {
         padding-bottom: 50px;
       }
     }
 
     .page-component__content {
-      padding-left: 270px;
+      padding-left: 240px;
       padding-bottom: 100px;
       box-sizing: border-box;
     }
@@ -142,7 +142,7 @@
     <el-backtop 
       v-if="showBackToTop"
       target=".page-component__scroll .el-scrollbar__wrap"
-      :right="100"
+      :right="60"
       :bottom="150"
     ></el-backtop>
   </div>

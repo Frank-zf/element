@@ -135,7 +135,7 @@
       &.is-fixed {
         position: fixed;
         bottom: 0;
-        width: 868px;
+        width: 1128;
       }
 
       i {

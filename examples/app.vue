@@ -9,6 +9,17 @@
 </template>
 
 <script>
+  import Vue from 'vue';
+  import 'xe-utils';
+  import VXETable from 'vxe-table';
+  window.VXETable = VXETable;
+  import vxeFormat from './vxe-format';
+  import 'vxe-table/lib/style.css';
+
+  Vue.use(VXETable);
+  VXETable.formats.mixin({
+    ...vxeFormat
+  });
   import { use } from 'main/locale';
   import zhLocale from 'main/locale/lang/zh-CN';
   import enLocale from 'main/locale/lang/en';
@@ -35,7 +46,6 @@
 
   export default {
     name: 'app',
-
     computed: {
       lang() {
         return this.$route.path.split('/')[1] || 'zh-CN';

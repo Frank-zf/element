@@ -5,6 +5,10 @@ function stripScript(content) {
   const result = content.match(/<(script)>([\s\S]+)<\/\1>/);
   return result && result[2] ? result[2].trim() : '';
 }
+function filterScript(content) {
+  const result = content.match(/<(script)>([\s\S]+)<\/\1>/);
+  return result && result[0] ? result[0].trim() : '';
+}
 
 function stripStyle(content) {
   const result = content.match(/<(style)\s*>([\s\S]+)<\/\1>/);
@@ -73,6 +77,7 @@ function genInlineComponentText(template, script) {
 
 module.exports = {
   stripScript,
+  filterScript,
   stripStyle,
   stripTemplate,
   genInlineComponentText

@@ -419,7 +419,7 @@
         verDropdownVisible: true,
         langDropdownVisible: true,
         langs: {
-          'zh-CN': '中文',
+          'zh-CN': '中文'
         }
       };
     },

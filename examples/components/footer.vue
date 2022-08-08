@@ -138,7 +138,7 @@
       margin: 10px;
     }
   }
-  @media (max-width: 1140px) {
+  @media (max-width: 1500px) {
     .footer {
       height: auto;
     }
