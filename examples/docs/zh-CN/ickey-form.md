@@ -347,12 +347,9 @@ export default {
 :::demo ickey-table
 ```html
 <el-row style="margin-bottom:20px">
-  <el-button>默认按钮</el-button>
-  <el-button type="primary">主要按钮</el-button>
-  <el-button type="success">成功按钮</el-button>
-  <el-button type="info">信息按钮</el-button>
-  <el-button type="warning">警告按钮</el-button>
-  <el-button type="danger">危险按钮</el-button>
+  <el-button @click="toolBarFunc('新增')" size="small">新增</el-button>
+  <el-button @click="toolBarFunc('删除')" size="small" type="primary">删除</el-button>
+  <el-button @click="toolBarFunc('禁用')" size="small" type="disabled">禁用</el-button>
 </el-row>
   <vxe-table
     ref="xTable1"
@@ -842,60 +839,9 @@ export default {
       this.tablePage2.pageSize = pageSize
       this.findList2()
     },
-    insertEvent() {
-      this.formData = {
-        name: '',
-        nickname: '',
-        role: '',
-        sex: '',
-        age: '',
-        num: '',
-        checkedList: [],
-        flag1: '',
-        date3: '',
-        address: '',
-      }
-      this.selectRow = null
-      this.showEdit = true
-    },
-    editEvent(row) {
-      this.formData = {
-        name: row.name,
-        nickname: row.nickname,
-        role: row.role,
-        sex: row.sex,
-        age: row.age,
-        num: row.num,
-        checkedList: row.checkedList,
-        flag1: row.flag1,
-        date3: row.date3,
-        address: row.address,
-      }
-      this.selectRow = row
-      this.showEdit = true
-    },
-    async removeEvent(row) {
-      const type = await VXETable.modal.confirm('您确定要删除该数据?')
-      const $table = this.$refs.xTable
-      if (type === 'confirm') {
-        $table.remove(row)
-      }
-    },
-    submitEvent() {
-      this.submitLoading = true
-      setTimeout(() => {
-        const $table = this.$refs.xTable
-        this.submitLoading = false
-        this.showEdit = false
-        if (this.selectRow) {
-          VXETable.modal.message({ content: '保存成功', status: 'success' })
-          Object.assign(this.selectRow, this.formData)
-        } else {
-          VXETable.modal.message({ content: '新增成功', status: 'success' })
-          $table.insert(this.formData)
-        }
-      }, 500)
-    },
+    toolBarFunc(type) {
+      this.$message(type)
+    }
   },
 }
 </script>
