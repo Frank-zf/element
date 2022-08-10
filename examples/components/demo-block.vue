@@ -62,6 +62,49 @@
 
     .source {
       padding: 24px;
+      pre {
+        line-height: 20px;
+        font-size: 13px;
+      }
+      .el-collapse-item__content{
+        .el-form-item__label{
+          width: 120px!important;
+        }
+        .el-form-item__content{
+          margin-left: 120px!important;
+        }
+        .el-input, .el-textarea, .el-select, .el-date-editor{
+          width: 300px!important;
+        }
+      }
+
+      .el-collapse.code-demo{
+        .el-collapse-item__header{
+          width: 300px;
+          margin-top: 10px; 
+          height: 24px;
+          line-height: 24px;
+          font-size: 12px;
+          font-weight: normal;
+          border: none;
+          // color: transparent;
+          // transition: all 0.3s;
+          // i{
+          //   color:#333;
+          // }
+          // &:hover{
+          //   color: #333;
+          // }
+        }
+        .el-collapse-item__content{
+          padding: 0;
+        }
+      }
+      .attr{
+        font-size: 14px;
+        font-weight: bold;
+        margin-bottom: 20px;
+      }
     }
 
     .meta {

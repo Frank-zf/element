@@ -24,14 +24,28 @@
   </el-collapse-item>
   <el-collapse-item title="可控 Controllability" name="4">
     <div>用户决策：根据场景可给予用户操作建议或安全提示，但不能代替用户进行决策；</div>
-    <div>结果可控：用户可以自由的进行操作，包括撤销、回退和终止当前操作等。</div>
+    <div>        <vxe-table
+          :align="allAlign"
+          :data="tableData">
+          <vxe-column type="seq" width="60"></vxe-column>
+          <vxe-column field="name" title="Name"></vxe-column>
+          <vxe-column field="sex" title="Sex"></vxe-column>
+          <vxe-column field="age" title="Age"></vxe-column>
+        </vxe-table></div>
   </el-collapse-item>
 </el-collapse>
 <script>
   export default {
     data() {
       return {
-        activeNames: ['1']
+        activeNames: ['1'],
+        allAlign: null,
+        tableData: [
+          { id: 10001, name: 'Test1', role: 'Develop', sex: 'Man', age: 28, address: 'test abc' },
+          { id: 10002, name: 'Test2', role: 'Test', sex: 'Women', age: 22, address: 'Guangzhou' },
+          { id: 10003, name: 'Test3', role: 'PM', sex: 'Man', age: 32, address: 'Shanghai' },
+          { id: 10004, name: 'Test4', role: 'Designer', sex: 'Women', age: 24, address: 'Shanghai' }
+        ]
       };
     },
     methods: {
@@ -52,7 +66,8 @@
 ```html
 <el-collapse v-model="activeName" accordion>
   <el-collapse-item title="一致性 Consistency" name="1">
-    <div>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</div>
+    <div>
+    </div>
     <div>在界面中一致：所有的元素和结构需保持一致，比如：设计样式、图标和文本、元素的位置等。</div>
   </el-collapse-item>
   <el-collapse-item title="反馈 Feedback" name="2">

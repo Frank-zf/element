@@ -7,7 +7,6 @@ function stripScript(content) {
 }
 function filterScript(content) {
   const result = content.match(/<(script)>([\s\S]+)<\/\1>/);
-  console.log(result[0], 'result[0]');
   return result && result[0] ? result[0].trim() : '';
 }
 

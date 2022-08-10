@@ -13,7 +13,10 @@ module.exports = md => {
     // console.log(prevToken.info, 'prevToken.info+++');
     const isInDemoContainer = prevToken && prevToken.nesting === 1 && prevToken.info.trim().match(/^demo\s*(.*)$/);
     const isIckey = prevToken.info.includes('ickey');
-    if (isIckey) {
+    const isNoCode = prevToken.info.includes('no-code');
+    if (isNoCode) {
+      return '';
+    } else if (isIckey) {
       return `<template slot="highlight"><pre v-pre><code class="html">${md.utils.escapeHtml(filterScript(token.content))}</code></pre></template>`;
     } else if (token.info === 'html' && isInDemoContainer) {
       return `<template slot="highlight"><pre v-pre><code class="html">${md.utils.escapeHtml(token.content)}</code></pre></template>`;
