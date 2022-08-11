@@ -65,6 +65,7 @@
       pre {
         line-height: 20px;
         font-size: 13px;
+        margin-bottom: 0;
       }
       .el-collapse-item__content{
         .el-form-item__label{
@@ -74,13 +75,19 @@
           margin-left: 120px!important;
         }
         .el-input, .el-textarea, .el-select, .el-date-editor{
-          width: 300px!important;
+          width: 340px!important;
         }
       }
-
+      .el-collapse-item:last-child {
+        margin-bottom: 0;
+      }
+      
       .el-collapse.code-demo{
+        &.marginBottom{
+          margin-bottom: 10px;
+        }
         .el-collapse-item__header{
-          width: 300px;
+          width: 340px;
           margin-top: 10px; 
           height: 24px;
           line-height: 24px;

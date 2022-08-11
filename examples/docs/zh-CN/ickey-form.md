@@ -1,7 +1,7 @@
 ## Ickey-Form 复杂表单
 ###
 
-:::demo ickey-form: 如果希望某个表单项或某个表单组件的尺寸不同于 Form 上的`size`属性，直接为这个表单项或表单组件设置自己的`size`即可。
+:::demo ickey-form，直接拷贝mockdata部分即可生成整个表单。
 ```html
   <el-form ref="form" :model="sizeForm" style="overflow:hidden" label-width="80px" size="mini">
     <el-col :span="8">
@@ -581,10 +581,25 @@ form表单Json配置的数据结构字段说明
     <div>类型为字符串，当前页面唯一即可</div>
   </el-collapse-item>
   <el-collapse-item title="element" name="element">
-    <div>类型为字符串，表示当前是form元素，其他可选值：table，modal，button等</div>
+    <div>类型为字符串，此处应该为'form'，其他可选值：form，table，modal，button等</div>
   </el-collapse-item>
   <el-collapse-item title="getData" name="getData">
-    <div>定义为函数，返回值一般为对象，对象可能包含的属性如下：（也可以自定义返回值）</div>
+    <div>类型为函数，此处定义的对象为提交表单时请求api接口的body参数，需自定义，每个属性对应表单中的各个input、select元素绑定值</div>
+      <el-collapse class="code-demo marginBottom">
+        <el-collapse-item title="代码示例">
+          <pre style="color:#666;">
+getData: () => {
+  return {
+    login_name: '张三用户名',
+    name: '张三',
+    work_code: '40056',
+    department: '1',
+    sitting_number: '3333356',
+  }
+}
+          </pre>
+        </el-collapse-item>
+      </el-collapse>
     <vxe-table
       :data="getData">
       <vxe-column field="name" title="属性"></vxe-column>
@@ -595,15 +610,22 @@ form表单Json配置的数据结构字段说明
     </vxe-table>
   </el-collapse-item>
   <el-collapse-item title="queryData" name="queryData">
-    <div>类型为函数，返回值一般为对象，对象可能包含的属性如下：（也可以自定义返回值）</div>
-    <vxe-table
+    <div>类型为函数，一般不需要修改</div>
+      <el-collapse class="code-demo marginBottom">
+        <el-collapse-item title="代码示例">
+          <pre style="color:#666;">
+queryData: (form) => {},
+          </pre>
+        </el-collapse-item>
+      </el-collapse>
+    <!-- <vxe-table
       :data="queryData">
       <vxe-column field="name" title="属性"></vxe-column>
       <vxe-column field="desc" title="说明"></vxe-column>
       <vxe-column field="type" title="类型/返回类型"></vxe-column>
       <vxe-column field="value" title="可选值"></vxe-column>
       <vxe-column field="default" title="默认值"></vxe-column>
-    </vxe-table>
+    </vxe-table> -->
   </el-collapse-item>
   <!-- <el-collapse-item title="getConfig" name="getConfig">
     <div>类型为函数，返回值一般为对象，对象可能包含的属性如下：（也可以自定义返回值）</div>
@@ -618,6 +640,37 @@ form表单Json配置的数据结构字段说明
   </el-collapse-item> -->
   <el-collapse-item title="getConfig" name="getConfig">
     <div>类型为函数，返回值一般为对象，对象可能包含的属性如下：</div>
+      <el-collapse class="code-demo marginBottom">
+        <el-collapse-item title="代码示例">
+          <pre style="color:#666;">
+getConfig: () => {
+  return {
+    elementProp: {
+      'label-width': 'auto',
+      span: 24,
+    },
+    lowcodeProp: {
+      filterFieldsByAuth: () => {
+        return {
+          url: '/auth/xxxx',
+          method: 'post',
+        }
+      },
+      getFields: () => {
+        return [
+          {
+            prop: 'company_name',
+            element: 'input',
+            label: '公司名称',
+          }
+        ]
+      }
+    }
+  }
+}
+          </pre>
+        </el-collapse-item>
+      </el-collapse>
   <el-table
     :data="getConfig"
     style="width: 100%"
@@ -653,15 +706,16 @@ form表单Json配置的数据结构字段说明
     data() {
       return {
         getData: [
-          { name: 'url', desc: 'api请求地址', type: 'string', value: '', default: '' },
-          { name: 'method', desc: 'api请求方式', type: 'sting', value: 'post,get', default: '' },
-          { name: 'data', desc: 'api请求参数', type: 'any', value: '', default: 'null' },
+          { name: 'login_name', desc: '登录名称', type: 'string', value: '', default: '' },
+          { name: 'name', desc: '用户名', type: 'sting', value: '', default: '' },
+          { name: 'work_code', desc: '工号', type: 'string', value: '', default: '' },
+          { name: '....', desc: '', type: '', value: '', default: '' },
         ],
-        queryData: [
-          { name: 'url', desc: 'api请求地址', type: 'string', value: '', default: '' },
-          { name: 'method', desc: 'api请求方式', type: 'sting', value: 'post,get', default: '' },
-          { name: 'data', desc: 'api请求参数', type: 'any', value: '', default: 'null' },
-        ],
+        // queryData: [
+        //   { name: 'url', desc: 'api请求地址', type: 'string', value: '', default: '' },
+        //   { name: 'method', desc: 'api请求方式', type: 'sting', value: 'post,get', default: '' },
+        //   { name: 'data', desc: 'api请求参数', type: 'any', value: '', default: 'null' },
+        // ],
         getConfig: [
           { 
             name: 'elementProp',
@@ -748,7 +802,7 @@ form表单Json配置的数据结构字段说明
 
 ### 元素说明
 
-form表单里的各个元素的字段说明，对应getFields里面的字段
+form表单里的各个元素的字段说明，对应getConfig-lowcodeProp-getFields里面的内容
 
 :::demo no-code
 ```html
@@ -976,7 +1030,7 @@ form表单里的各个元素的字段说明，对应getFields里面的字段
   prop: 'department',
   element: 'select',
   label: '部门',
-  multiple: true,
+  multiple: true,// 多选
   getData: () => {
     return {
       method: 'post',
@@ -1006,7 +1060,7 @@ form表单里的各个元素的字段说明，对应getFields里面的字段
   prop: 'menu',
   element: 'select',
   label: '菜单',
-  multiple: true,
+  filterable: true,// 搜索
   getData: () => {
     return {
       method: 'post',
@@ -1054,11 +1108,11 @@ form表单里的各个元素的字段说明，对应getFields里面的字段
         </el-form-item>
       </el-col>
       <el-col :span="24">
-        <el-form-item label="日期+时间">
+        <el-form-item label="日期时间">
         <el-date-picker
           v-model="dateForm.value1"
           type="datetime"
-          placeholder="选择日期">
+          placeholder="选择日期和时间">
         </el-date-picker>
           <el-collapse class="code-demo">
             <el-collapse-item title="代码示例">
@@ -1075,7 +1129,7 @@ form表单里的各个元素的字段说明，对应getFields里面的字段
         </el-form-item>
       </el-col>
       <el-col :span="24">
-        <el-form-item label="日期范围">
+        <el-form-item label="日期时间范围">
         <el-date-picker
           v-model="dateForm.value2"
           type="datetimerange"
@@ -1164,7 +1218,7 @@ form表单里的各个元素的字段说明，对应getFields里面的字段
 {
   props: 'cascader',
   element: 'cascader',
-  multiple: true,
+  multiple: true,// 多选
   label: '产品类型',
   getData: () => {
     return [
@@ -1352,8 +1406,8 @@ form表单里的各个元素的字段说明，对应getFields里面的字段
           { name: 'prop', desc: '当前元素对应的接口字段', type: 'string', value: '', default: '',required: 'true' },
           { name: 'element', desc: '元素类型', type: 'sting', value: 'cascader', default: '',required: 'true' },
           { name: 'label', desc: '标签名称', type: 'string', value: '', default: '',required: 'true' },
-          { name: 'multiple', desc: '支持多选', type: 'number', value: '', default: 'null' },
-          { name: 'level', desc: '层级', type: 'string', value: 'true,false', default: '' },
+          { name: 'multiple', desc: '支持多选', type: 'boolean', value: 'true,false', default: 'false' },
+          { name: 'level', desc: '级联层级', type: 'number', value: '', default: '' },
           { name: 'getData', desc: '当前元素的数据从接口获取，具体用法参考配置说明-getData，handleSelectChange的用法和getData类似', type: 'function', value: '', default: '' },
         ]
       };
