@@ -12,7 +12,7 @@ export default {
   // 格式化日期，默认 yyyy-MM-dd HH:mm:ss
   formatDate({ cellValue }, format) {
     const val = String(cellValue).length > 9 ? cellValue : cellValue + '0000';
-    return XEUtils.toDateString(Number(val), format || 'yyyy-MM-dd');
+    return XEUtils.toDateString(Number(val), format || 'yyyy-MM-dd HH:mm:ss');
   },
   // 四舍五入金额，每隔3位逗号分隔，默认2位数
   formatAmount({ cellValue }, digits = 2) {

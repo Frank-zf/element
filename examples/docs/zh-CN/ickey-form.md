@@ -664,7 +664,35 @@ getConfig: () => {
             label: '公司名称',
           }
         ]
-      }
+      },
+      footer: [
+        {
+          type: 'primary',
+          element: 'button',
+          name: '查询',
+          action: (formData) => {
+            return {
+              type: 'request',
+              data: formData,
+              method: 'post',
+              url: '/api/query',
+              updateElementId: 'table.staff2Table',
+            }
+          },
+        },
+        {
+          element: 'button',
+          name: '重置',
+          type: 'reset',
+          action: function(formData) {
+            return {
+              type: 'reset',
+              method: 'post',
+              url: '/api/query2',
+              updateElementId: 'table.staff2Table',
+            }
+          },
+        },
     }
   }
 }
@@ -773,6 +801,13 @@ getConfig: () => {
               {
                 name: 'getFields',
                 desc: '类型为函数，返回值为数组，具体元素类型见下方元素说明',
+                type: '',
+                value: '',
+                default: '',
+              },
+              {
+                name: 'footer',
+                desc: '类型为函数，返回值为数组，可以配置表单的查询和重置按钮，这段可以直接复制，只有updateElementId需要自定义，为查询后对应需要更新的table的元素id',
                 type: '',
                 value: '',
                 default: '',
@@ -989,7 +1024,7 @@ form表单里的各个元素的字段说明，对应getConfig-lowcodeProp-getFie
               </el-option>
             </el-select>
             <el-collapse class="code-demo">
-              <el-collapse-item title="代码示例，枚举型">
+              <el-collapse-item title="代码示例，本地枚举型">
                 <pre style="color:#666;">
 {
   prop: 'station',
@@ -998,8 +1033,8 @@ form表单里的各个元素的字段说明，对应getConfig-lowcodeProp-getFie
   getData: () => {
     return [
       {
-        value: '1',
-        label: '岗位一'
+        value: '1',// 传参数据
+        label: '岗位一'// 下拉选项显示文案
       },
       {
         value: '2',
@@ -1073,9 +1108,46 @@ form表单里的各个元素的字段说明，对应getConfig-lowcodeProp-getFie
             </el-collapse>
           </el-form-item>
         </el-col>
+        <el-col :span="24">
+          <el-form-item label="select联动">
+            <el-select v-model="selectForm.value3" filterable placeholder="这里选择的结果会联动其他select框">
+              <el-option
+                v-for="item in selectForm.options1"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
+            <el-collapse class="code-demo">
+              <el-collapse-item title="代码示例，后台获取">
+                <pre style="color:#666;">
+{
+  prop: 'department',
+  element: 'select',
+  label: '部门1',
+  getData: () => {
+    return {
+      method: 'post',
+      url: '/staff/department-list',
+    }
+  },
+  handleSelectChange: (data) => {
+    return {
+      url: '/test/staff/station-list',// 这里代表当前select框切换以后需要重新去获取职位列表，并将接口返回数据传给你需要联动的目标元素
+      data: data,
+      method: 'post',
+      updateElementId: 'form.staffform.station',// 这里配置你需要联动的目标元素，格式为form.[formId].[元素id]
+    }
+  },
+}
+                </pre>
+              </el-collapse-item>
+            </el-collapse>
+          </el-form-item>
+        </el-col>
       </el-form>
     <div class="attr">属性说明：</div>
-    <vxe-table
+    <!-- <vxe-table
       :data="selectData">
       <vxe-column field="name" title="属性"></vxe-column>
       <vxe-column field="desc" title="说明"></vxe-column>
@@ -1083,7 +1155,35 @@ form表单里的各个元素的字段说明，对应getConfig-lowcodeProp-getFie
       <vxe-column field="value" title="可选值"></vxe-column>
       <vxe-column field="default" title="默认值"></vxe-column>
       <vxe-column field="required" title="是否必须"></vxe-column>
-    </vxe-table>
+    </vxe-table> -->
+  <el-table
+    :data="selectData"
+    style="width: 100%"
+    border
+    row-key="name"
+    :header-cell-style="() => 'background:#eee'"
+    :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
+    <el-table-column
+      prop="name"
+      label="属性">
+    </el-table-column>
+    <el-table-column
+      prop="desc"
+      label="说明">
+    </el-table-column>
+    <el-table-column
+      prop="type"
+      label="类型/返回类型">
+    </el-table-column>
+    <el-table-column
+      prop="value"
+      label="可选值">
+    </el-table-column>
+    <el-table-column
+      prop="default"
+      label="默认值">
+    </el-table-column>
+  </el-table>
   </el-collapse-item>
   <el-collapse-item title="date 日期时间选择" name="date">
     <el-form ref="form" :model="dateForm" style="overflow:hidden;margin-top:20px" label-width="80px" size="mini">
@@ -1393,8 +1493,74 @@ form表单里的各个元素的字段说明，对应getConfig-lowcodeProp-getFie
           { name: 'element', desc: '元素类型', type: 'sting', value: 'select', default: '',required: 'true' },
           { name: 'label', desc: '标签名称', type: 'string', value: '', default: '',required: 'true' },
           { name: 'disabled', desc: '是否禁用', type: 'boolean', value: 'true,false', default: 'false' },
-          { name: 'getData', desc: '当前元素的数据从接口获取,具体用法参考配置说明-getData', type: 'function', value: '', default: '' },
+          { name: 'getData',
+            desc: '当前元素的数据从接口获取，具体用法参考配置说明-getData，handleSelectChange的用法和getData类似',
+            type: 'function',
+            value: '',
+            default: '',
+            children: [
+              {
+                name: 'url',
+                desc: 'Api接口请求地址',
+                type: 'string',
+                value: '',
+                default: '',
+              },
+              {
+                name: 'method',
+                desc: 'Api接口请求地址',
+                type: 'string',
+                value: 'post,get',
+                default: '',
+              },
+              {
+                name: 'data',
+                desc: 'Api接口请求参数',
+                type: 'any',
+                value: '',
+                default: '',
+              }
+            ]
+          },
+          { 
+            name: 'handleSelectChange',
+            desc: '当前选框切换选择结果之后需要做的操作',
+            type: 'function',
+            value: '',
+            default: '',
+            children: [
+              {
+                name: 'url',
+                desc: 'Api接口请求地址',
+                type: 'string',
+                value: '',
+                default: '',
+              },
+              {
+                name: 'method',
+                desc: 'Api接口请求地址',
+                type: 'string',
+                value: 'post,get',
+                default: '',
+              },
+              {
+                name: 'data',
+                desc: 'Api接口请求参数',
+                type: 'any',
+                value: '',
+                default: '',
+              }
+            ]
+          }
         ],
+        // selectData: [
+        //   { name: 'prop', desc: '当前元素对应的接口字段', type: 'string', value: '', default: '',required: 'true' },
+        //   { name: 'element', desc: '元素类型', type: 'sting', value: 'select', default: '',required: 'true' },
+        //   { name: 'label', desc: '标签名称', type: 'string', value: '', default: '',required: 'true' },
+        //   { name: 'disabled', desc: '是否禁用', type: 'boolean', value: 'true,false', default: 'false' },
+        //   { name: 'getData', desc: '当前元素的数据从接口获取，具体用法参考配置说明-getData，handleSelectChange的用法和getData类似', type: 'function', value: '', default: '' },
+        //   { name: 'handleSelectChange', desc: '当前选框切换选择结果之后需要做的操作', type: 'function', value: '', default: '' },
+        // ],
         dateData: [
           { name: 'prop', desc: '当前元素对应的接口字段', type: 'string', value: '', default: '',required: 'true' },
           { name: 'element', desc: '元素类型', type: 'sting', value: 'datepicker', default: '',required: 'true' },

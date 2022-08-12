@@ -517,7 +517,7 @@ table表格Json配置的数据结构字段说明
     <div>类型为字符串，此处应该为'table'，其他可选值：form，table，modal，button等</div>
   </el-collapse-item>
   <el-collapse-item title="getData" name="getData">
-    <div>类型为函数，返回值一般为对象，对象可能包含的属性如下：（也可以自定义返回值）</div>
+    <div>类型为函数，此处定义的是table的请求接口数据，返回值一般为对象，对象可能包含的属性如下：</div>
       <el-collapse class="code-demo marginBottom">
         <el-collapse-item title="代码示例">
           <pre style="color:#666;">
@@ -559,6 +559,7 @@ getConfig: () => {
       },
       tableTitle: '关联公司',
       toolBar: [
+        //这里放table左上角的按钮，可放置多个
         {},
         ...
       ],

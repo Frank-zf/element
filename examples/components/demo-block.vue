@@ -67,6 +67,12 @@
         font-size: 13px;
         margin-bottom: 0;
       }
+      .el-button{
+        height: 28px;
+        border-radius: 2px;
+        padding: 8px 10px;
+        font-size: 12px;
+      }
       .el-collapse-item__content{
         .el-form-item__label{
           width: 120px!important;
