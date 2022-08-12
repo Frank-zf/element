@@ -47,26 +47,6 @@
         <el-cascader :props="props" placeholder="请选择产品类型" filterable />
       </el-form-item>
     </el-col>
-    <!-- <el-col :span="8">
-      <el-form-item label="注册时间">
-        <el-date-picker
-          v-model="sizeForm.register_time"
-          type="date"
-          placeholder="选择注册时间"
-        />
-      </el-form-item>
-    </el-col>
-    <el-col :span="12">
-      <el-form-item label="最后下单时间">
-        <el-date-picker
-          v-model="sizeForm.order_time"
-          type="daterange"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
-        />
-      </el-form-item>
-    </el-col> -->
-
     <el-col :span="8">
       <el-form-item size="large">
         <el-button type="primary" size="mini" @click="onSubmit">查询</el-button>
@@ -187,28 +167,7 @@ const mockdata = [
             ]
           },
           header: [],
-          footer: [
-            // {
-            //   element: 'button',
-            //   getConfig: () => {
-            //     return [
-            //       {
-            //         name: '查询',
-            //         action: function () {
-            //           return {}
-            //         },
-            //         // position: 'left',
-            //       },
-            //       {
-            //         name: '重置',
-            //         action: function () {
-            //           alert('我是一个自定义按钮')
-            //         },
-            //       },
-            //     ]
-            //   },
-            // },
-          ],
+          footer: [],
         },
       }
     },
@@ -217,34 +176,10 @@ const mockdata = [
     id: 'staffTable',
     element: 'table',
     getData() {
-      // alert('此处可以为表单提供数据，也可以进行refresh')
       return {
         url: '/staff/list',
         method: 'post',
       }
-      // return new Promise((resolve, reject) => {
-      //   setTimeout(() => {
-      //     const res = [
-      //       {
-      //         id: 1,
-      //         name: '啊啊啊',
-      //         test: 'test',
-      //         login_name: '小张',
-      //         sitting_number: '',
-      //         qq: '3333',
-      //       },
-      //       {
-      //         id: 2,
-      //         name: 'bbbb',
-      //         test: '34test',
-      //         login_name: '小李',
-      //         sitting_number: '',
-      //         qq: '4444',
-      //       },
-      //     ]
-      //     resolve(res)
-      //   }, 500)
-      // })
     },
     getConfig: () => {
       return {
@@ -324,202 +259,10 @@ const mockdata = [
               },
             ]
           },
-          // header: [],
-          // footer: [],
         },
       }
     },
   },
-  {
-    id: 'getSatff',
-    element: 'button',
-    getConfig() {
-      return {
-        name: '获取人员列表',
-        type: 'primary',
-        size: 'small',
-        disabled() {
-          return {
-          }
-        },
-        action() {
-          return {
-            url: '/staff/list',
-            data: {},
-            method: 'post',
-          }
-        }
-      }
-    }
-  },
-  {
-    id: 'submitForm',
-    element: 'button',
-    getConfig() {
-      return {
-        name: '查询',
-        type: 'primary',
-        icon: 'el-icon-search',
-        action() {
-          return {
-            formId: 'staffform',
-            tableId: 'staffTable',
-            url: '/staff/list',
-            method: 'post'
-          }
-        }
-      }
-    }
-  },
-  {
-    id: 'resetForm',
-    element: 'button',
-    getConfig() {
-      return {
-        name: '重置',
-        action() {
-          return {
-            formId: 'staffform',
-            tableId: 'staffTable',
-            formRef: 'staffform',
-            url: '/staff/list',
-            method: 'post',
-            type: 'reset'
-          }
-        }
-      }
-    }
-  },
-  {
-    id: 'addStaff',
-    element: 'button',
-    getConfig() {
-      return {
-        name: '添加员工',
-        type: 'primary',
-        action() {
-          return {
-            type: 'modal',
-            element: 'add-page'
-          }
-        },
-      }
-    }
-  },
-  {
-    id: 'deleteStaff',
-    element: 'button',
-    getConfig() {
-      return {
-        name: '删除员工',
-        type: 'danger',
-        check() {
-          return {
-            max: null,
-            min: 1,
-          }
-        },
-        action() {
-          return {
-            tableId: 'staffTable',
-            url: '/staff/delete',
-            method: 'post',
-            params: 'ids:id'
-          }
-        }
-      }
-    }
-  },
-  {
-    id: 'openLink',
-    element: 'button',
-    getConfig() {
-      return {
-        name: '打开新标签页',
-        type: 'primary',
-        action() {
-          return {
-            type: 'link',
-            url: 'https://www.baidu.com/'
-          }
-        },
-      }
-    }
-  },
-  {
-    id: 'routerLink',
-    element: 'button',
-    getConfig() {
-      return {
-        name: '路由跳转',
-        type: 'primary',
-        action() {
-          return {
-            type: 'link',
-            url: '/user/staff'
-          }
-        },
-      }
-    }
-  },
-  {
-    id: 'export',
-    element: 'button',
-    getConfig() {
-      return {
-        name: '导出',
-        type: 'warning',
-        action() {
-          return {
-            formId: 'staffform',
-            url: '/user/export',
-            method: 'post',
-            params: 'department:department',
-          }
-        },
-      }
-    }
-  },
-  {
-    id: 'drawer',
-    element: 'button',
-    getConfig() {
-      return {
-        name: 'form抽屉',
-        type: 'primary',
-        action() {
-          return {
-            type: 'drawer',
-            element: 'add-page-drawer'
-          }
-        },
-      }
-    }
-  },
-  {
-    id: 'upload',
-    element: 'button',
-    getConfig() {
-      return {
-        name: '上传',
-        type: 'success',
-        upload() {
-          return {
-            limit: 3,
-            multiple: false,
-            autoUpload: true,
-            accept: '.js,.html,.vue,.png,.pdf',
-          }
-        },
-        action() {
-          return {
-            method: 'get',
-            url: '/user/upload-user-file'
-          }
-        },
-      }
-    }
-  }
 ]
 export default {
   data() {
